@@ -1,0 +1,31 @@
+A csodálatos pisztácia fagylat kalandja
+start 
+játékos megadja a nevét
+alapvető dolgok hp=100 ; inventory=[1000 éves kard;gyémántalma(75hp regenálodás)] ; jtámadóerő=random ; jhaténykonyság=random ; tuzvédekezzés:10%;
+//helyszin:
+Kunyhó (start)
+Sötét Erdő (Koboldok)
+Tölgy Erdő (semmi egyelőre)
+Gombaland (Minotarousz)
+Tisztás (bandita)
+Falu (idosno)
+Hegyvidék (sárkány)
+misztikusvonat(MÁV)
+tengerpart
+strand
+Fagyiárus==Bud Spencer
+Fagyiárus (Vége)
+/válaszások
+kunyhó ( jatekos nev:(nev))
+/Kimész 
+/Maradsz (Dark souls ending)
+/kimesz => /Sötét erdő loot(daroczi gergo gyuruje kepesseg:(20%-al több sebzés,5%-al több Tűzz eleni védekelzés) ) / Tölgy erdő (acél kardot találtál felveszed)
+=>sötét erdő ==> Gombaland találkozol egy minotaurusal de ő mérgesen neked megy 
+=>tölgy erdő ==> Tisztás találkozol egy banditával kiakar rabolni harcolsz vele 
+=>gombaland || tisztas ==> falu
+=>faluban találkozol egy idosnovel  (add neked egy thanos kart elfogadod? i/n)(kar tulajdonságai 50% al több sebzés,10% max hp==110hp,15%-al több tűzz elleni védekezést)(n esttén ad neked egy gyurut ami a max hp noveli 50% max hp == 150hp)
+=>falu=>hegyvidékre de egy sárkány elállja az utat elosonsz vagy megüzdesz vele (sárkány hp=300hp stámadóerő=20;)loot(megkülzdesz megölöd a sárkányt Káosz pengéje 60%-több sebzés)(elosonsz vagy megküzdesz)
+(eloson sikeresen elmenekültél de nem kaptál semmit)
+=>hegyvidék ről kiérve misztikusvonat érkezik ami a strandra vissz de nem lesz békés kimenetű az út
+=>út közben találkozol a banditával (de te már erősseb vagy) megküzdesz vele?(i/n) (i mellvért tet kapsz 25 % több sebzést fogsz fell)(n -10hp mert gyáva vagy))
+=> kiérsz  a tengerpartra de meg találod a final boss Bud Spencer Fagylat árust kihiv téged egy harcra(i/n(i esettén ha már megszerezted a cuccokat akkor még igy is 45% eséllyed van rá hogy nyerj)(n esettén meghaltál))(ha történet elején megvártad a barátodat akkor alapcuccokal nem birál arcolni mert az első támadás után meghaltál volna)

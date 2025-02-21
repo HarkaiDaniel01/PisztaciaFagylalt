@@ -14,11 +14,22 @@ namespace PisztáciaFagylalt
         public static double jatekosHP;
         public static String jatekosNev;
         public static double jatekosTuzVedekezes;
+        public static Boolean JatekosEl;
+
         public static Boolean gyemantAlma;
+
         static void Main(string[] args)
         {
             double goblinTamadoEro = 5;
             double goblinHP = 30;
+
+            double minotaurusTamadoEro = 4;
+            double minotauruszHp = 50;
+
+            double banditaTamadoEro = 3;
+            double banditaHP = 20;
+
+            Boolean acelKard;
 
             ConsoleKey billentyu;
             //Fő program:
@@ -27,7 +38,9 @@ namespace PisztáciaFagylalt
                 jatekosHP = 100;
                 jatekosTamadoEro = 10;
                 jatekosTuzVedekezes = 10;
+                JatekosEl = true;
                 gyemantAlma = true;
+                acelKard = false;
 
                 String szoveg = ("A csodálatos pisztácia fagylalt kalandja");
 
@@ -77,24 +90,76 @@ namespace PisztáciaFagylalt
 
                     if (valaszElagazas.ToLower() == "bal")
                     {
-                        Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy kobold. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
+                        Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy goblin. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
 
                         if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
                         {
-                            Console.WriteLine("Sikeresen legyőzted a goblint és megszerezted tőle Daróczi Gergő gyűtűjét,melynek segtségével 20%-al több az alap támadóerőd és 5%-al több a tűz elleni védekezésed.");
-                            jatekosTamadoEro *= 1.2;
-                            jatekosTuzVedekezes += 1.05;
+                            Console.WriteLine("\nSikeresen legyőzted a goblint és megszerezted tőle Daróczi Gergő gyűrűjét,melynek segítségével 20%-al több az alap támadóerőd és 5%-al több a tűz elleni védekezésed.");
+                            jatekosTamadoEro = Math.Round(jatekosTamadoEro * 1.2);
+                            jatekosTuzVedekezes = Math.Round(jatekosTuzVedekezes * 1.05);
                             jatekosAdatKiir();
-                        }
-                        else
-                        {
-                            Console.WriteLine("A goblin megöld téged, vége a játéknak.");
-                        }
 
+                            Console.WriteLine("Továbbmész. Megérkezel Gomba Land-be,ahol találkozol a Minótaurusszal,aki dühösen neked megy.");
+                            if (csata("Minótaurusz", minotaurusTamadoEro, minotauruszHp))
+                            {
+                                
+                            } 
+                        }
                     }
                     else if (valaszElagazas.ToLower() == "jobb")
                     {
-                        Console.WriteLine("jobb");
+                        Console.WriteLine("\nA Tölgyerdőben haladsz tovább az ösvényen és találsz egy acélkardot.");
+                    acelkard:
+                        Console.WriteLine("Felveszed az acélkardot? | igen | nem | ");
+                        String valaszKard = Console.ReadLine();
+                        
+                        if (valaszKard.ToLower() == "igen")
+                        {
+                            Console.WriteLine("Sikeresen felvetted az acélkardot,ami a támadóerődet megnöveli + 40%-al");
+                            acelKard = true;
+                            jatekosTamadoEro = Math.Round(jatekosTamadoEro * 1.4);
+                            jatekosAdatKiir();
+                        } else if (valaszKard.ToLower() == "nem")
+                        {
+                            Console.WriteLine("Nem vetted fel az acél kardot és tovább haladtál,azonban egy furcsa hangra lettél figyelmes. Visszapillantva azt vetted észre,hogy az acél kard rejélyes módon eltűnt.");
+                        } else
+                        {
+                            Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                            goto acelkard;
+                        }
+
+                        Console.WriteLine("Megérkezel egy tisztásra. Találkozol egy banditával,aki ki akar rabolni.");
+                    bandita:
+                        Console.WriteLine("Harcolsz vagy elmenekülsz? | Harcolok | Elmenekülök |");
+                        String valaszBandita = Console.ReadLine();
+
+                        if (valaszBandita.ToLower() == "harcolok")
+                        {
+                            if (csata("Bandita", banditaTamadoEro, banditaHP))
+                            {
+                                Console.WriteLine("Siker");
+                            }
+
+                        } else if (valaszBandita.ToLower() == "elmenekülök")
+                        {
+                            Console.WriteLine("Megpróbáltál elmenekülni,de nem voltál elég gyors és a bandita elkapott.");
+                            if (acelKard == true)
+                            {
+                                Console.WriteLine("Elrabolta tőled az acél kardot, így 40%-al csökkent a támadó erőd.");
+                                jatekosTamadoEro = Math.Round(jatekosTamadoEro / 1.4);
+                                jatekosAdatKiir();
+                            } else
+                            {
+                                Console.WriteLine("Elrabolta tőled az ezer éves kardot, így vesztettél a támadó erődből 1 pontot.");
+                                jatekosTamadoEro -= 1;
+                                jatekosAdatKiir();
+                            }
+                            
+                        } else
+                        {
+                            Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                            goto bandita;
+                        }
                     }
                     else
                     {
@@ -133,6 +198,8 @@ namespace PisztáciaFagylalt
             Console.WriteLine($"támadóerő: {ellenfelTamadoEro}");
             Console.WriteLine($"életerő: {ellenfelHP}");
 
+            Console.WriteLine("Nyomj ENTER billentyűt, ha készen állsz a harcra!");
+            Console.ReadKey();
             do
             {
                 Console.WriteLine("----------------------------------------------------------");
@@ -160,7 +227,7 @@ namespace PisztáciaFagylalt
                 if (jatekosHP < 0) jatekosHP = 0;
 
                 Console.WriteLine($"játékos életereje: {jatekosHP}");
-                Console.WriteLine("\nNyomj ENTER-t a folytatáshoz\n");
+                Console.WriteLine("\nNyomj ENTER billentyűt a folytatáshoz\n");
                 Console.ReadKey();
 
                 if (gyemantAlma == true && jatekosHP <= 35 && jatekosHP > 0)
@@ -170,13 +237,13 @@ namespace PisztáciaFagylalt
                     Console.Write("Megeszed az almát? | igen | nem | : ");
                     String valaszAlma = Console.ReadLine();
 
-                    if (valaszAlma == "igen")
+                    if (valaszAlma.ToLower() == "igen")
                     {
                         jatekosHP += 75;
                         gyemantAlma = false;
                         Console.WriteLine($"Az életerőd most már: {jatekosHP}");
                     }
-                    else if (valaszAlma == "nem")
+                    else if (valaszAlma.ToLower() == "nem")
                     {
                         Console.WriteLine($"Az életerőd továbbra is: {jatekosHP}");
                     } else
@@ -193,7 +260,11 @@ namespace PisztáciaFagylalt
                 Console.WriteLine("Győztél!");
                 gyozelem = true;
             }
-            else Console.WriteLine("Vesztettél!");
+            else
+            {
+                Console.WriteLine($"A {ellenfelNev} megölt téged, vége a játéknak.");
+                JatekosEl = false;
+            }
 
             return gyozelem;
         }

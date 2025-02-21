@@ -3,30 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace PisztáciaFagylalt
+namespace Test
 {
     class Program
     {
+        public static double jatekosTamadoEro = 10;
+        public static double jatekosHP = 30;
+        public static String jatekosNev;
         static void Main(string[] args)
         {
-            double jatekosTamadoEro = 10;
-            double jatekosHP = 30;
-
-
             double goblinTamadoEro = 3;
             double goblinHP = 20;
 
-            double hatekonysag;
-            String jatekosNev;
-
             ConsoleKey billentyu;
-
-            Random veletlen = new Random();
-
             //Fő program:
-
             do
             {
                 String szoveg = ("A csodálatos pisztácia fagylalt kalandja");
@@ -65,28 +56,35 @@ namespace PisztáciaFagylalt
                 Console.WriteLine($"\n\n\nKedves és hősies {jatekosNev}!\nEgy barátod veled szeretne menni erre a kalandra.\nFelajánlotta,hogy ha megvárod őt,akkor el tud téged vinni a tengerpartra a Daróczi mobillal.\nViszont neked most kell az a fagylalt. Mit választasz?");
 
             kunyho:
-                Console.Write("\nMegvárod vagy elindulsz egyedül? | Maradok | Elindulok | ");
+                Console.Write("\nMegvárod vagy elindulsz egyedül? | Maradok | Elindulok | : ");
                 String valaszKunyho = Console.ReadLine();
 
                 if (valaszKunyho.ToLower() == "elindulok")
                 {
                     Console.WriteLine("\nElindulsz egyedül a kalandos utnak. Magaddal viszed a fegyveredet,az ezer éves kardot és a gyémántalmát,amit ha egyszer felhasználhatsz és akkor +75 életerőt ad.");
                 elagazas:
-                    Console.WriteLine("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő. Melyik utat választod? | Bal | jobb |");
+                    Console.Write("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő. Melyik utat választod? | Bal | jobb | : ");
                     String valaszElagazas = Console.ReadLine();
 
                     if (valaszElagazas.ToLower() == "bal")
                     {
                         Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy kobold. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
 
-                        
+                        if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
+                        {
+                            Console.WriteLine("Működik és győztél.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Működik és vesztettél");
+                        }
 
-
-
-                    } else if (valaszElagazas.ToLower() == "jobb")
+                    }
+                    else if (valaszElagazas.ToLower() == "jobb")
                     {
                         Console.WriteLine("jobb");
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("\nNem megfelelő választ adtál meg!");
                         goto elagazas;
@@ -95,7 +93,7 @@ namespace PisztáciaFagylalt
                 }
                 else if (valaszKunyho.ToLower() == "maradok")
                 {
-                  
+
                     Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van csokoládé és vanillia. Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd megöl téged.Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
 
                 }
@@ -109,70 +107,35 @@ namespace PisztáciaFagylalt
                 billentyu = Console.ReadKey(true).Key;
 
             } while (billentyu != ConsoleKey.Escape);
-
-            /*-----------------------------------------------Harc jelenet-------------------------------------------------*/
-            /*do
-            {
-                Console.WriteLine("------------------------------------------------------");
-                hatekonysag = veletlen.Next(1, 101);
-                Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
-
-                Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                csontvazHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                if (csontvazHP < 0) csontvazHP = 0;
-                Console.WriteLine($"csontváz életereje: {csontvazHP}");
-                Console.WriteLine("\n------------------------------------------------------");
-
-                if (csontvazHP > 0)
-                {
-                    hatekonysag = veletlen.Next(1, 101);
-                    Console.WriteLine($"Csontváz támadó hatékonysága: {hatekonysag} %");
-
-
-                    Console.WriteLine($"Csontváz támad {Math.Round(csontvazTamadoEro * hatekonysag / 100)} erővel");
-                    jatekosHP -= Math.Round(csontvazTamadoEro * hatekonysag / 100);
-
-                }
-
-                if (jatekosHP < 0) jatekosHP = 0;
-
-                Console.WriteLine($"játékos életereje: {jatekosHP}");
-                Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                Console.ReadKey();
-
-            } while (jatekosHP != 0 && csontvazHP != 0);
-
-            if (jatekosHP > 0) Console.WriteLine("Győztél!");
-            else Console.WriteLine("Vesztettél!");
-
-            Console.ReadKey();
-            */
         }
 
-        /*public Boolean csata()
+        /*-----------------------------------------------Harc jelenet-------------------------------------------------*/
+        public static Boolean csata(String ellenfelNev, double ellenfelTamadoEro, double ellenfelHP)
         {
+            Random veletlen = new Random();
+            Boolean gyozelem = false;
+            double hatekonysag;
             do
             {
                 Console.WriteLine("------------------------------------------------------");
                 hatekonysag = veletlen.Next(1, 101);
-                Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
+                Console.WriteLine($"{jatekosNev} támadó hatékonysága: {hatekonysag} %");
 
-                Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                csontvazHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
+                Console.WriteLine($"{jatekosNev} támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
+                ellenfelHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
 
-                if (csontvazHP < 0) csontvazHP = 0;
-                Console.WriteLine($"csontváz életereje: {csontvazHP}");
+                if (ellenfelHP < 0) ellenfelHP = 0;
+                Console.WriteLine($"{ellenfelNev} életereje: {ellenfelHP}");
                 Console.WriteLine("\n------------------------------------------------------");
 
-                if (csontvazHP > 0)
+                if (ellenfelHP > 0)
                 {
                     hatekonysag = veletlen.Next(1, 101);
-                    Console.WriteLine($"Csontváz támadó hatékonysága: {hatekonysag} %");
+                    Console.WriteLine($"{ellenfelNev} támadó hatékonysága: {hatekonysag} %");
 
 
-                    Console.WriteLine($"Csontváz támad {Math.Round(csontvazTamadoEro * hatekonysag / 100)} erővel");
-                    jatekosHP -= Math.Round(csontvazTamadoEro * hatekonysag / 100);
+                    Console.WriteLine($"{ellenfelNev} támad {Math.Round(ellenfelTamadoEro * hatekonysag / 100)} erővel");
+                    jatekosHP -= Math.Round(ellenfelTamadoEro * hatekonysag / 100);
 
                 }
 
@@ -182,11 +145,15 @@ namespace PisztáciaFagylalt
                 Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
                 Console.ReadKey();
 
-            } while (jatekosHP != 0 && csontvazHP != 0);
+            } while (jatekosHP != 0 && ellenfelHP != 0);
 
-            if (jatekosHP > 0) Console.WriteLine("Győztél!");
+            if (jatekosHP > 0) {
+                Console.WriteLine("Győztél!");
+                gyozelem = true;
+            }
             else Console.WriteLine("Vesztettél!");
-            return true;
-        }*/
+
+            return gyozelem;
+        }
     }
 }

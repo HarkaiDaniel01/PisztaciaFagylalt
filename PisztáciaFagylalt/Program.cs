@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -9,18 +10,25 @@ namespace PisztáciaFagylalt
 {
     class Program
     {
-        public static double jatekosTamadoEro = 10;
-        public static double jatekosHP = 30;
+        public static double jatekosTamadoEro;
+        public static double jatekosHP;
         public static String jatekosNev;
+        public static double jatekosTuzVedekezes;
+        public static Boolean gyemantAlma;
         static void Main(string[] args)
         {
-            double goblinTamadoEro = 3;
-            double goblinHP = 20;
+            double goblinTamadoEro = 5;
+            double goblinHP = 30;
 
             ConsoleKey billentyu;
             //Fő program:
             do
             {
+                jatekosHP = 100;
+                jatekosTamadoEro = 10;
+                jatekosTuzVedekezes = 10;
+                gyemantAlma = true;
+
                 String szoveg = ("A csodálatos pisztácia fagylalt kalandja");
 
                 int konzolSzelesseg = Console.WindowWidth;  // A konzol szélessége
@@ -73,11 +81,14 @@ namespace PisztáciaFagylalt
 
                         if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
                         {
-                            Console.WriteLine("Működik és győztél.");
+                            Console.WriteLine("Sikeresen legyőzted a goblint és megszerezted tőle Daróczi Gergő gyűtűjét,melynek segtségével 20%-al több az alap támadóerőd és 5%-al több a tűz elleni védekezésed.");
+                            jatekosTamadoEro *= 1.2;
+                            jatekosTuzVedekezes += 1.05;
+                            jatekosAdatKiir();
                         }
                         else
                         {
-                            Console.WriteLine("Működik és vesztettél");
+                            Console.WriteLine("A goblin megöld téged, vége a játéknak.");
                         }
 
                     }
@@ -116,9 +127,15 @@ namespace PisztáciaFagylalt
             Random veletlen = new Random();
             Boolean gyozelem = false;
             double hatekonysag;
+            jatekosAdatKiir();
+
+            Console.WriteLine($"{ellenfelNev} adatai: ");
+            Console.WriteLine($"támadóerő: {ellenfelTamadoEro}");
+            Console.WriteLine($"életerő: {ellenfelHP}");
+
             do
             {
-                Console.WriteLine("------------------------------------------------------");
+                Console.WriteLine("----------------------------------------------------------");
                 hatekonysag = veletlen.Next(1, 101);
                 Console.WriteLine($"{jatekosNev} támadó hatékonysága: {hatekonysag} %");
 
@@ -127,7 +144,7 @@ namespace PisztáciaFagylalt
 
                 if (ellenfelHP < 0) ellenfelHP = 0;
                 Console.WriteLine($"{ellenfelNev} életereje: {ellenfelHP}");
-                Console.WriteLine("\n------------------------------------------------------");
+                Console.WriteLine("\n----------------------------------------------------------");
 
                 if (ellenfelHP > 0)
                 {
@@ -143,8 +160,31 @@ namespace PisztáciaFagylalt
                 if (jatekosHP < 0) jatekosHP = 0;
 
                 Console.WriteLine($"játékos életereje: {jatekosHP}");
-                Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
+                Console.WriteLine("\nNyomj ENTER-t a folytatáshoz\n");
                 Console.ReadKey();
+
+                if (gyemantAlma == true && jatekosHP <= 35 && jatekosHP > 0)
+                {
+                    Console.WriteLine("Az életerőd nagyon alacsony lett. Fel szeretnéd használni a gyémántalmát,hogy kapj +75 Hp-t?");
+                alma:
+                    Console.Write("Megeszed az almát? | igen | nem | : ");
+                    String valaszAlma = Console.ReadLine();
+
+                    if (valaszAlma == "igen")
+                    {
+                        jatekosHP += 75;
+                        gyemantAlma = false;
+                        Console.WriteLine($"Az életerőd most már: {jatekosHP}");
+                    }
+                    else if (valaszAlma == "nem")
+                    {
+                        Console.WriteLine($"Az életerőd továbbra is: {jatekosHP}");
+                    } else
+                    {
+                        Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                        goto alma;
+                    }
+                }
 
             } while (jatekosHP != 0 && ellenfelHP != 0);
 
@@ -157,5 +197,16 @@ namespace PisztáciaFagylalt
 
             return gyozelem;
         }
+
+        public static void jatekosAdatKiir()
+        {
+            Console.WriteLine("\n----------------------------------------------------------");
+            Console.WriteLine($"{jatekosNev} adatai: ");
+            Console.WriteLine($"támadóerő: {jatekosTamadoEro}");
+            Console.WriteLine($"életerő: {jatekosHP}");
+            Console.WriteLine($"tűz elleni védekezés: {jatekosTuzVedekezes}");
+            Console.WriteLine("----------------------------------------------------------");
+        }
+
     }
 }

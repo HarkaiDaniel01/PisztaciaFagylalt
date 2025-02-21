@@ -10,40 +10,41 @@ namespace PisztáciaFagylalt
 {
     class Program
     {
+        public static double jatekosTamadoEro ;
+        public static double jatekosHP = 30;
+        public static String jatekosNev;
+        public static double hatekonysag;
         static void Main(string[] args)
         {
-            double jatekosTamadoEro = 10;
-            double jatekosHP = 100;
-
+            double goblinHP = 50; 
             double goblinTamadoEro = 3;
-            double goblinHP = 20;
-
-            double hatekonysag;
-
-            double minotaurusHP = 150;
+            double minotaurusHP = 50; 
             double minotaurusTamadoEro = 4;
-
-            double rabloHP = 15;
-            double rabloTamadoEro = 2;
-
+            double banditaHP = 20;
+            double banditaTamadoEro = 3;
             double sarkanyHP = 300;
             double sarkanyTamadoEro = 5;
-
             double budspencerHP = 500;
-            double budspencerTamadoEro = 15;
+            double budspencerTamadoEro = 25;
+            double jatekosHP = 100;
+            
+            
 
             String jatekosNev;
             String[] Inventory = new string[] { "1000 éves kard,Gyémántalma" };
-            ConsoleKey Billi;
+
             Random veletlen = new Random();
+
+
+            
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("                                                  __    \r\n(\\,----------------------------------------------'()'--o\r\n (_    _A csodalatos pisztacia fagylat kalandja_    /~\" \r\n  (_)_)                                        (_)_)    ");
+                Console.WriteLine("csodalatos pisztacia fagylat kalandja");
 
 
                 Console.Write("Add meg a neved: ");
-     
+
                 jatekosNev = Console.ReadLine();
                 /*történet*/
                 Console.WriteLine($"Üdvözöllek {jatekosNev}! Nyomj le egy billentyűt,ha készen állsz az izgalmas utazásra!");
@@ -86,68 +87,35 @@ namespace PisztáciaFagylalt
                     goto kunyho;
                 }
             elagazas:
-                Console.WriteLine("Elágazáshoz érkezel döntés az hogy jobbra vagy balra ( jobb | bal)");
+                Console.Write("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő. Melyik utat választod? | Bal | jobb | : ");
+                String valaszElagazas = Console.ReadLine();
 
-                string dontes2 = Console.ReadLine();
-                if (dontes2.ToLower() == "jobb")
+                if (valaszElagazas.ToLower() == "bal")
                 {
-                    Console.WriteLine("Sikeresen Elérkeztél a tölgyerőbe");
-                    goto tolgyerdo;
-                }
-                else if (dontes2.ToLower() == "bal")
-                {
-                    Console.WriteLine("Sikeresen Elérkeztél a sötét erőbe");
-                    goto soteterdo;
-                }
-                else
-                {
-                    Console.WriteLine("Nincs ilyen lehetőség!");
-                    goto elagazas;
-                }
-            soteterdo:
-                Console.WriteLine("Be érkeztél a sötéterőbe találkozol egy goblinnal de a goblin nem barátságos neked ment");
-                do
-                {
-                    Console.WriteLine("------------------------------------------------------");
-                    hatekonysag = veletlen.Next(1, 101);
-                    Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
+                    Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy kobold. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
 
-                    Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                    goblinHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                    if (goblinHP < 0)
-                        goblinHP = 0;
-                    Console.WriteLine($"goblin életereje: {goblinHP}");
-                    Console.WriteLine("\n------------------------------------------------------");
-
-                    if (goblinHP > 0)
+                    if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
                     {
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"goblin támadó hatékonysága: {hatekonysag} %");
-
-
-                        Console.WriteLine($"goblin támad {Math.Round(goblinTamadoEro * hatekonysag / 100)} erővel");
-                        jatekosHP -= Math.Round(goblinTamadoEro * hatekonysag / 100);
-
+                        Console.WriteLine("Működik és győztél.");
+                        goto gombaland;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Működik és vesztettél");
                     }
 
-                    if (jatekosHP < 0)
-                        jatekosHP = 0;
-
-                    Console.WriteLine($"játékos életereje: {jatekosHP}");
-                    Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                    Console.ReadKey();
-
-                } while (jatekosHP != 0 && goblinHP != 0);
-
-                if (jatekosHP > 0)
+                }
+                else if (valaszElagazas.ToLower() == "jobb")
                 {
-                    Console.WriteLine("Győztél! és megkaptad Daróczi Gergő gyürűjét (20%-al több sebzés,5%-al több Tűzz eleni védekelzés)");
-                    goto gombaland;
+                    Console.WriteLine("jobb");
+                    goto tolgyerdo;
                 }
                 else
-                    Console.WriteLine("Vesztettél!");
-                tolgyerdo:
+                {
+                    Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                    goto elagazas;
+                }
+            tolgyerdo:
                 Console.WriteLine("elkérztél a tölgyerdőbe de találtál egy acél kardot felveszed? Igen|Nem");
                 string dontes3 = Console.ReadLine();
                 if (dontes3.ToLower() == "igen")
@@ -167,47 +135,12 @@ namespace PisztáciaFagylalt
                 }
             gombaland:
                 Console.WriteLine("Gombaland találkozol egy minotaurusal de ő mérgesen neked megy");
-                do
+                if (csata("Minotaurus", minotaurusTamadoEro, minotaurusHP) == true)
                 {
-                    Console.WriteLine("------------------------------------------------------");
-                    hatekonysag = veletlen.Next(1, 101);
-                    Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
-
-                    Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                    minotaurusHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                    if (minotaurusHP < 0)
-                        minotaurusHP = 0;
-                    Console.WriteLine($"minotaurus életereje: {minotaurusHP}");
-                    Console.WriteLine("\n------------------------------------------------------");
-
-                    if (minotaurusHP > 0)
-                    {
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"minotaurus támadó hatékonysága: {hatekonysag} %");
-
-
-                        Console.WriteLine($"minotaurus támad {Math.Round(minotaurusTamadoEro * hatekonysag / 100)} erővel");
-                        jatekosHP -= Math.Round(minotaurusTamadoEro * hatekonysag / 100);
-
-                    }
-
-                    if (jatekosHP < 0)
-                        jatekosHP = 0;
-
-                    Console.WriteLine($"játékos életereje: {jatekosHP}");
-                    Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                    Console.ReadKey();
-
-                } while (jatekosHP != 0 && minotaurusHP != 0);
-
-                if (jatekosHP > 0)
-                {
-                    Console.WriteLine("Győztél! és megkaptad A mintotaurus bárdját (25%-al több sebzés)");
-                    goto falu;
+                    Console.WriteLine("Működik és győztél.");
+                    goto gombaland;
                 }
-                else
-                    Console.WriteLine("Vesztettél!");
+                
                 if (jatekosHP < 30)
                     goto gyemantalma;
                 else
@@ -217,67 +150,26 @@ namespace PisztáciaFagylalt
                 string dontes4 = Console.ReadLine();
                 if (dontes4.ToLower() == "igen")
                 {
-                    do
+                    if (csata("Goblin", banditaTamadoEro, banditaHP) == true)
                     {
-                        Console.WriteLine("------------------------------------------------------");
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
-
-                        Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                        rabloHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                        if (rabloHP < 0)
-                            rabloHP = 0;
-                        Console.WriteLine($"rabló életereje: {rabloHP}");
-                        Console.WriteLine("\n------------------------------------------------------");
-
-                        if (rabloHP > 0)
-                        {
-                            hatekonysag = veletlen.Next(1, 101);
-                            Console.WriteLine($"rabló támadó hatékonysága: {hatekonysag} %");
-
-
-                            Console.WriteLine($"rabló támad {Math.Round(rabloTamadoEro * hatekonysag / 100)} erővel");
-                            jatekosHP -= Math.Round(rabloTamadoEro * hatekonysag / 100);
-
-                        }
-
-                        if (jatekosHP < 0)
-                            jatekosHP = 0;
-
-                        Console.WriteLine($"játékos életereje: {jatekosHP}");
-                        Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                        Console.ReadKey();
-
-                    } while (jatekosHP != 0 && rabloHP != 0);
-
-                    if (jatekosHP > 0)
-                    {
-                        Console.WriteLine("Győztél! nem kaptál semmit de nem veszitettél semmit)");
-                        goto falu;
-
+                        Console.WriteLine("Működik és győztél.");
+                        goto gombaland;
                     }
-                    else
-                        Console.WriteLine("Vesztettél!");
-                    if (jatekosHP >= 30)
+                    else if (dontes4.ToLower() == "nem")
                     {
-                        goto gyemantalma;
+                        Console.WriteLine("Nem voltál elég gyors és elkapott (elvesztetted az 1000 éves kardot)");
+                        goto falu;
                     }
                     else
                     {
-                        goto falu;
+                        Console.WriteLine("Bro tanulj meg irni");
+                        goto tisztas;
                     }
+
+
+                    
                 }
-                else if (dontes4.ToLower() == "nem")
-                {
-                    Console.WriteLine("Nem voltál elég gyors és elkapott (elvesztetted az 1000 éves kardot)");
-                    goto falu;
-                }
-                else
-                {
-                    Console.WriteLine("Bro tanulj meg irni");
-                    goto tisztas;
-                }
+                
             gyemantalma:
                 Console.WriteLine("Megszeretnéd enni a gyémánt almát? Igen|Nem");
                 string gyalma = Console.ReadLine();
@@ -324,48 +216,15 @@ namespace PisztáciaFagylalt
                 if (dontes6.ToLower() == "megküzdesz")
                 {
                     Console.WriteLine("A sárkány felébredt és észre vett");
-                    do
+                    if (csata("Sárkány", sarkanyTamadoEro, sarkanyHP) == true)
                     {
-                        Console.WriteLine("------------------------------------------------------");
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
-
-                        Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                        sarkanyHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                        if (sarkanyHP < 0)
-                            sarkanyHP = 0;
-                        Console.WriteLine($"sárkány életereje: {sarkanyHP}");
-                        Console.WriteLine("\n------------------------------------------------------");
-
-                        if (sarkanyHP > 0)
-                        {
-                            hatekonysag = veletlen.Next(1, 101);
-                            Console.WriteLine($"sárkány támadó hatékonysága: {hatekonysag} %");
-
-
-                            Console.WriteLine($"sárkány támad {Math.Round(sarkanyTamadoEro * hatekonysag / 100)} erővel");
-                            jatekosHP -= Math.Round(sarkanyTamadoEro * hatekonysag / 100);
-
-                        }
-
-                        if (jatekosHP < 0)
-                            jatekosHP = 0;
-
-                        Console.WriteLine($"játékos életereje: {jatekosHP}");
-                        Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                        Console.ReadKey();
-
-                    } while (jatekosHP != 0 && sarkanyHP != 0);
-
-                    if (jatekosHP > 0)
-                    {
-                        Console.WriteLine("Győztél! és megkaptad A Káosz Pengéjét(60%-több sebzés és 15%-al több tűz sebzés)");
-                        goto mav;
+                        Console.WriteLine("Működik és győztél.és megkaptad A Káosz Pengéjét(60%-több sebzés és 15%-al több tűz sebzés");
+                        goto gombaland;
                     }
                     else
-                        Console.WriteLine("Vesztettél!");
-
+                    {
+                        Console.WriteLine("Működik és vesztettél");
+                    }
                 }
                 else if (dontes6.ToLower() == "elosonsz")
                 {
@@ -380,48 +239,17 @@ namespace PisztáciaFagylalt
             mav:
                 Console.WriteLine("Sikeresen kiérve a hegyvidékről megláttod hogy egy misztikusvonat jelenik meg a távolban felszálsz és a fedélzeten egy banditával találkozol megharcolsz vele vagy sem Igen|Nem");
                 string dontes7 = Console.ReadLine();
-                if (dontes7.ToLower() == "megküzdesz")
-                    do
+                if (csata("bandita", banditaTamadoEro, banditaHP) == true)
                     {
-                        Console.WriteLine("------------------------------------------------------");
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
+                      Console.WriteLine("Győztél! megkapdat egy'az elveszet lovag péncélja' neveztű páncélt(25%-al több védekezés)");
+                      goto tengerpart;
+                    }
+                        
+                
 
-                        Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                        rabloHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
+                
 
-                        if (rabloHP < 0)
-                            rabloHP = 0;
-                        Console.WriteLine($"rabló életereje: {rabloHP}");
-                        Console.WriteLine("\n------------------------------------------------------");
-
-                        if (rabloHP > 0)
-                        {
-                            hatekonysag = veletlen.Next(1, 101);
-                            Console.WriteLine($"rabló támadó hatékonysága: {hatekonysag} %");
-
-
-                            Console.WriteLine($"rabló támad {Math.Round(rabloTamadoEro * hatekonysag / 100)} erővel");
-                            jatekosHP -= Math.Round(rabloTamadoEro * hatekonysag / 100);
-
-                        }
-
-                        if (jatekosHP < 0)
-                            jatekosHP = 0;
-
-                        Console.WriteLine($"játékos életereje: {jatekosHP}");
-                        Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-                        Console.ReadKey();
-
-                    } while (jatekosHP != 0 && rabloHP != 0);
-
-                if (jatekosHP > 0)
-                {
-                    Console.WriteLine("Győztél! megkapdat egy'az elveszet lovag péncélja' neveztű páncélt(25%-al több védekezés)");
-                    goto tengerpart;
-                }
-
-                else if (dontes6.ToLower() == "Nem")
+                else if (dontes7.ToLower() == "Nem")
                 {
                     Console.WriteLine($"A bandita megsebez de életben maradsz -10hp {jatekosHP - 10}");
                     goto tengerpart;
@@ -434,68 +262,86 @@ namespace PisztáciaFagylalt
             tengerpart:
                 Console.WriteLine("kiérsz  a tengerpartra de meg találod a final boss Bud Spencer Fagylat árust kihiv téged egy harcra Igen|Nem");
                 string dontes8 = Console.ReadLine();
-                if (dontes6.ToLower() == "megküzdesz")
+                if (dontes8.ToLower() == "Igen")
                 {
-                    Console.WriteLine("A sárkány felébredt és észre vett");
-                    do
+                    if (csata("Bud Spencer", budspencerTamadoEro, budspencerHP) == true)
                     {
-                        Console.WriteLine("------------------------------------------------------");
-                        hatekonysag = veletlen.Next(1, 101);
-                        Console.WriteLine($"Játékos támadó hatékonysága: {hatekonysag} %");
-
-                        Console.WriteLine($"Játékos támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                        budspencerHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
-
-                        if (budspencerHP < 0)
-                            budspencerHP = 0;
-                        Console.WriteLine($"Bud Spencer életereje: {budspencerHP}");
-                        Console.WriteLine("\n------------------------------------------------------");
-
-                        if (sarkanyHP > 0)
-                        {
-                            hatekonysag = veletlen.Next(1, 101);
-                            Console.WriteLine($"Bud Spencer támadó hatékonysága: {hatekonysag} %");
-
-
-                            Console.WriteLine($"Bud Spencer támad {Math.Round(budspencerTamadoEro * hatekonysag / 100)} erővel");
-                            jatekosHP -= Math.Round(budspencerTamadoEro * hatekonysag / 100);
-
-                        }
-
-                        if (jatekosHP < 0)
-                            jatekosHP = 0;
-
-                        Console.WriteLine($"játékos életereje: {jatekosHP}");
-                        Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
-
-
-                    } while (jatekosHP != 0 && budspencerHP != 0);
+                        Console.WriteLine("Működik és győztél.");
+                    }
+                    else
                     {
-
-
-                        if (jatekosHP > 0)
-                        {
-                            Console.WriteLine("Győztél! Vége a Játéknak kilépéshez nyomd med az (esc) gombot vagy (entert) a újrajátszáshoz");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Vesztettél! Vége a ");
-                        }
+                        Console.WriteLine("Működik és vesztettél");
                     }
                 }
                 else if (dontes8.ToLower() == "Nem")
                 {
                     Console.WriteLine("Bro a végén vagy és te nemet mondasz (Instant Halál) Játkokat kilépéshez nyomd med az (esc) gombot vagy (entert) a újrajátszáshoz");
                 }
-                Billi = Console.ReadKey(true).Key;
-            } while (Billi != ConsoleKey.Escape);
 
 
+                if (jatekosHP > 0)
+                {
+                    Console.WriteLine("Győztél! Vége a Játéknak kilépéshez nyomd meg az (esc) gombot vagy (entert) a újrajátszáshoz");
+                }
+                else
+                {
+                    Console.WriteLine("Vesztettél! Vége a Játéknak kilépéshez nyomd meg az (esc) gombot vagy (entert) a újrajátszáshoz");
+                }
 
 
-            Console.ReadKey();
-
-
+            }while (true);
         }
+        public static Boolean csata(String ellenfelNev, double ellenfelTamadoEro, double ellenfelHP)
+        {
+            Random veletlen = new Random();
+            Boolean gyozelem = false;
+            double hatekonysag;
+            do
+            {
+                Console.WriteLine("------------------------------------------------------");
+                hatekonysag = veletlen.Next(1, 101);
+                Console.WriteLine($"{jatekosNev} támadó hatékonysága: {hatekonysag} %");
+
+                Console.WriteLine($"{jatekosNev} támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
+                ellenfelHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
+
+                if (ellenfelHP < 0)
+                    ellenfelHP = 0;
+                Console.WriteLine($"{ellenfelNev} életereje: {ellenfelHP}");
+                Console.WriteLine("\n------------------------------------------------------");
+
+                if (ellenfelHP > 0)
+                {
+                    hatekonysag = veletlen.Next(1, 101);
+                    Console.WriteLine($"{ellenfelNev} támadó hatékonysága: {hatekonysag} %");
+
+                    Console.WriteLine($"{ellenfelNev} támad {Math.Round(ellenfelTamadoEro * hatekonysag / 100)} erővel");
+                    jatekosHP -= Math.Round(ellenfelTamadoEro * hatekonysag / 100);
+                }
+
+                if (jatekosHP < 0)
+                    jatekosHP = 0;
+
+                Console.WriteLine($"játékos életereje: {jatekosHP}");
+                Console.WriteLine("\nNyomj ENTER-t a folytatáshoz");
+                Console.ReadKey();
+
+            } while (jatekosHP != 0 && ellenfelHP != 0);
+
+            if (jatekosHP > 0)
+            {
+                Console.WriteLine("Győztél!");
+                gyozelem = true;
+            }
+            else
+                Console.WriteLine("Vesztettél!");
+
+            return gyozelem;
+        }
+
+
+            
+
+        
     }
 }

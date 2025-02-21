@@ -43,6 +43,7 @@ namespace PisztáciaFagylalt
 
 
                 Console.Write("Add meg a neved: ");
+     
                 jatekosNev = Console.ReadLine();
                 /*történet*/
                 Console.WriteLine($"Üdvözöllek {jatekosNev}! Nyomj le egy billentyűt,ha készen állsz az izgalmas utazásra!");
@@ -77,7 +78,7 @@ namespace PisztáciaFagylalt
                 else if (dontes1.ToLower() == "maradsz")
                 {
                     Console.WriteLine("Megvártad a barátodat és elvittéged a daróczi mobilra de semilyen cuccal neki vágni a bossnak egy kicsit meredek (Dark souls ending)");
-                    //goto ending; 
+
                 }
                 else
                 {
@@ -207,6 +208,10 @@ namespace PisztáciaFagylalt
                 }
                 else
                     Console.WriteLine("Vesztettél!");
+                if (jatekosHP < 30)
+                    goto gyemantalma;
+                else
+                    goto falu;
                 tisztas:
                 Console.WriteLine("találkozol egy banditával kiakar rabolni harcolsz vele Igen|Nem");
                 string dontes4 = Console.ReadLine();
@@ -250,10 +255,18 @@ namespace PisztáciaFagylalt
                     {
                         Console.WriteLine("Győztél! nem kaptál semmit de nem veszitettél semmit)");
                         goto falu;
+
                     }
                     else
                         Console.WriteLine("Vesztettél!");
-
+                    if (jatekosHP >= 30)
+                    {
+                        goto gyemantalma;
+                    }
+                    else
+                    {
+                        goto falu;
+                    }
                 }
                 else if (dontes4.ToLower() == "nem")
                 {
@@ -270,7 +283,8 @@ namespace PisztáciaFagylalt
                 string gyalma = Console.ReadLine();
                 if (gyalma.ToLower() == "Igen")
                 {
-                    Console.WriteLine($"Megetted {jatekosHP + 75}");
+                    Console.WriteLine($"Megetted");
+                    jatekosHP += 75;
                     goto falu;
                 }
                 else if (gyalma.ToLower() == "Nem")
@@ -284,24 +298,26 @@ namespace PisztáciaFagylalt
                     goto gyemantalma;
                 }
             falu:
-                    Console.WriteLine("Felérkeztél egy faluba, és találkozol egy idős nővel. (Add neked egy Thanos kart? Elfogadod? Igen/Nem)");
-                    string dontes5 = Console.ReadLine();
+                Console.WriteLine("Felérkeztél egy faluba, és találkozol egy idős nővel. (Add neked egy Thanos kart? Elfogadod? I/N)");
+                string dontes5 = Console.ReadLine();
 
-                    if (dontes5.ToLower() == "igen")
-                    {
-                        Console.WriteLine("Elfogadtad a kart! (50% több sebzés, 10%-kal több max hp == 110hp, 15%-kal több tűz elleni védekezés)");
-                        goto hegyvidek;
-                    }
-                    else if (dontes5.ToLower() == "nem")
-                    {
-                        Console.WriteLine("Megértette, de adott neked egy gyűrűt! (50%-kal több max hp == 150hp)");
-                        goto hegyvidek;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Hibás válasz! Kérlek, írj 'Igen' vagy 'Nem'.");
-                    goto falu; 
-                    }
+                if (dontes5.ToLower() == "i")
+                {
+                    Console.WriteLine($"Elfogadtad a kart! (50% több sebzés, 10%-kal több max hp == 110hp, 15%-kal több tűz elleni védekezés)");
+                    jatekosHP += 10;
+                    goto hegyvidek;
+                }
+                else if (dontes5.ToLower() == "n")
+                {
+                    Console.WriteLine($"Megértette, de adott neked egy gyűrűt! (50%-kal több max hp == 150hp)");
+                    jatekosHP += 50;
+                    goto hegyvidek;
+                }
+                else
+                {
+                    Console.WriteLine("Hibás válasz! Kérlek, írj 'Igen' vagy 'Nem'.");
+                    goto falu;
+                }
             hegyvidek:
                 Console.WriteLine("A falut elhagyva egy hegyvidékrészhez érkezve egy sárkány állja el az utad aki éppen alszik elosonsz|megküzdesz vele?");
                 string dontes6 = Console.ReadLine();
@@ -353,7 +369,7 @@ namespace PisztáciaFagylalt
                 }
                 else if (dontes6.ToLower() == "elosonsz")
                 {
-                    Console.WriteLine("Gyáva vagy ezért a sárkány észre vett de ép elmenekültél -10hp");
+                    Console.WriteLine($"Gyáva vagy ezért a sárkány észre vett de ép elmenekültél -10hp{jatekosHP - 10}");
                 }
                 else
                 {
@@ -407,7 +423,7 @@ namespace PisztáciaFagylalt
 
                 else if (dontes6.ToLower() == "Nem")
                 {
-                    Console.WriteLine("A bandita megsebez de életben maradsz -10hp");
+                    Console.WriteLine($"A bandita megsebez de életben maradsz -10hp {jatekosHP - 10}");
                     goto tengerpart;
                 }
                 else
@@ -459,23 +475,23 @@ namespace PisztáciaFagylalt
 
                         if (jatekosHP > 0)
                         {
-                            Console.WriteLine("Győztél! Vége a Játéknak kilépéshez nyomd med az esc gombot vagy entert a újrajátszáshoz");
+                            Console.WriteLine("Győztél! Vége a Játéknak kilépéshez nyomd med az (esc) gombot vagy (entert) a újrajátszáshoz");
                         }
                         else
                         {
-                            Console.WriteLine("Vesztettél! Vége a Játkokat kilépéshez nyomd med az esc gombot vagy entert a újrajátszáshoz");
+                            Console.WriteLine("Vesztettél! Vége a ");
                         }
                     }
                 }
                 else if (dontes8.ToLower() == "Nem")
                 {
-                    Console.WriteLine("Bro a végén vagy és te nemet mondasz (Instant Halál)");
+                    Console.WriteLine("Bro a végén vagy és te nemet mondasz (Instant Halál) Játkokat kilépéshez nyomd med az (esc) gombot vagy (entert) a újrajátszáshoz");
                 }
                 Billi = Console.ReadKey(true).Key;
             } while (Billi != ConsoleKey.Escape);
-            
 
-            
+
+
 
             Console.ReadKey();
 

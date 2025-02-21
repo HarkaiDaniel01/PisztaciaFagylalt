@@ -10,7 +10,7 @@ namespace PisztáciaFagylalt
 {
     class Program
     {
-        public static double jatekosTamadoEro ;
+        public static double jatekosTamadoEro=10 ;
         public static double jatekosHP = 30;
         public static String jatekosNev;
         public static double hatekonysag;
@@ -338,10 +338,6 @@ namespace PisztáciaFagylalt
 
             return gyozelem;
         }
-
-
-            
-
-        
+ 
     }
 }

@@ -11,9 +11,11 @@ namespace PisztáciaFagylalt
     class Program
     {
         public static double jatekosTamadoEro;
+        public static double jatekosVedekezes;
         public static double jatekosHP;
         public static String jatekosNev;
         public static double jatekosTuzVedekezes;
+        public static double jatekosTuzTamadas;
         public static Boolean JatekosEl;
 
         public static Boolean gyemantAlma;
@@ -29,7 +31,7 @@ namespace PisztáciaFagylalt
             double banditaTamadoEro = 3;
             double banditaHP = 20;
 
-            double sarkanyTamadoEro = 20;
+            double sarkanyTamadoEro = 25;
             double sarkanyHP = 300;
 
             Boolean acelKard;
@@ -40,7 +42,9 @@ namespace PisztáciaFagylalt
             {
                 jatekosHP = 100;
                 jatekosTamadoEro = 10;
+                jatekosVedekezes = 0;
                 jatekosTuzVedekezes = 10;
+                jatekosTuzTamadas = 0;
                 JatekosEl = true;
                 gyemantAlma = true;
                 acelKard = false;
@@ -114,7 +118,7 @@ namespace PisztáciaFagylalt
                     {
                         Console.WriteLine("\nA Tölgyerdőben haladsz tovább az ösvényen és találsz egy acélkardot.");
                     acelkard:
-                        Console.WriteLine("Felveszed az acélkardot? | igen | nem | ");
+                        Console.Write("Felveszed az acélkardot? | igen | nem | : ");
                         String valaszKard = Console.ReadLine();
                         
                         if (valaszKard.ToLower() == "igen")
@@ -134,7 +138,7 @@ namespace PisztáciaFagylalt
 
                         Console.WriteLine("Megérkezel egy tisztásra. Találkozol egy banditával,aki ki akar rabolni.");
                     bandita:
-                        Console.WriteLine("Harcolsz vagy elmenekülsz? | Harcolok | Elmenekülök |");
+                        Console.Write("Harcolsz vagy elmenekülsz? | Harcolok | Elmenekülök | : ");
                         String valaszBandita = Console.ReadLine();
 
                         if (valaszBandita.ToLower() == "harcolok")
@@ -177,7 +181,7 @@ namespace PisztáciaFagylalt
                     falu:
                         Console.WriteLine("\nThanos kar:\n\t+50% támadóerő\n\t+10 HP\n\t+15% Tűz elleni védekezés\n ");
                         Console.WriteLine("Harka gyűrű:\n\t +50 HP\n");
-                        Console.Write("Melyiket választod? | kar | gyűrű | ");
+                        Console.Write("Melyiket választod? | kar | gyűrű | : ");
                         String valaszFegyver = Console.ReadLine();
 
                         if (valaszFegyver.ToLower() == "kar")
@@ -200,19 +204,58 @@ namespace PisztáciaFagylalt
 
                         Console.WriteLine("A falut elhagyva egy hegyvidékhez érkezel,ahol nem tudsz továbbhaladni,mert egy sárkány alszk elötted.");
                     hegyvidek:
-                        Console.Write("Megküzdesz a sárkánnyal vagy megpróbálsz elosonni? | harcolok | elosonok |");
+                        Console.Write("Megküzdesz a sárkánnyal vagy megpróbálsz elosonni? | Harcolok | Elosonok | : ");
                         String valaszSarkany = Console.ReadLine();
 
                         if (valaszSarkany.ToLower() == "harcolok")
                         {
                             Console.WriteLine("A sárkány felébredt és észrevett.");
-                            csata("Sárkány", sarkanyTamadoEro, sarkanyHP);
+                            if (csata("Sárkány", sarkanyTamadoEro, sarkanyHP))
+                            {
+                                Console.WriteLine("Legyőzted a sárkányt és megszerezted a Káosz pengéjét (+60% támadóerő, +15p tűz sebzés)!");
+                                jatekosTuzTamadas += 15;
+                                jatekosTamadoEro = Math.Round(jatekosTamadoEro * 1.6);
+                                jatekosAdatKiir();
+                            }
+                            
                         } else if (valaszSarkany.ToLower() == "elosonok") {
+                            Console.WriteLine("Megpróbáltál elosonni,de a sárkány észrevett és megsebzett,de végül elmenekültél. Vesztettél 10 Hp-t.");
+                            jatekosHP -= 10;
+                            jatekosAdatKiir();
 
                         } else
                         {
                             Console.WriteLine("\nNem megfelelő választ adtál meg!");
                             goto hegyvidek;
+                        }
+                    }
+
+                    if (JatekosEl)
+                    {
+                        Console.WriteLine("Sikeresen átjutottál a hegyvidéken. A távolban megpillantasz egy misztikus vonatot. Felszálsz rá. A vonaton találkozol egy banditával.");
+                    vonat:
+                        Console.WriteLine("Megküzdesz a banditával vagy nem? | Igen | Nem | : ");
+                        String valaszBandita = Console.ReadLine();
+
+                        if (valaszBandita.ToLower() == "igen")
+                        {
+                            if (csata("Bandita", banditaTamadoEro, banditaHP)) {
+                                Console.WriteLine("Győztél! Megkaptad az 'Elveszett lovag páncélja' nevezetű páncélt (+25 pont védekezés)!");
+                                jatekosVedekezes += 25;
+                                jatekosAdatKiir();
+                            }
+
+                        }
+                        else if (valaszBandita.ToLower() == "nem")
+                        {
+                            Console.WriteLine("A bandita megsebez,de életben maradsz. (-10 HP)");
+                            jatekosHP -= 10;
+                            jatekosAdatKiir();
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                            goto vonat;
                         }
                     }
 
@@ -254,9 +297,15 @@ namespace PisztáciaFagylalt
                 Console.WriteLine("----------------------------------------------------------");
                 hatekonysag = veletlen.Next(1, 101);
                 Console.WriteLine($"{jatekosNev} támadó hatékonysága: {hatekonysag} %");
-
                 Console.WriteLine($"{jatekosNev} támad {Math.Round(jatekosTamadoEro * hatekonysag / 100)} erővel");
-                ellenfelHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
+
+                if (jatekosTuzTamadas > 0)
+                {
+                    Console.WriteLine($"+{jatekosTuzTamadas} tűz sebzés!");
+                    ellenfelHP -= Math.Round((jatekosTamadoEro * hatekonysag / 100) + jatekosTuzTamadas);
+                }
+                else ellenfelHP -= Math.Round(jatekosTamadoEro * hatekonysag / 100);
+
 
                 if (ellenfelHP < 0) ellenfelHP = 0;
                 Console.WriteLine($"{ellenfelNev} életereje: {ellenfelHP}");
@@ -275,9 +324,28 @@ namespace PisztáciaFagylalt
                         double sarkanyTamadas = Math.Round(ellenfelTamadas - jatekosTuzVedekezes);
                         if (sarkanyTamadas < 0) sarkanyTamadas = 0;
                         Console.WriteLine($"A sárkány tűz erejét hárítod a tűz elleni védekezésed segítségével! A sárkány így csak {sarkanyTamadas} erővel támad.");
+
+                        if (jatekosVedekezes > 0)
+                        {
+                            sarkanyTamadas -= jatekosVedekezes;
+                            if (sarkanyTamadas < 0) sarkanyTamadas = 0;
+                            Console.WriteLine($"A védekezésednek köszönhetően hárítod a {ellenfelNev} támadását. A {ellenfelNev} {sarkanyTamadas} erővel támad");
+                        }
+
                         jatekosHP -= sarkanyTamadas;
 
-                    } else jatekosHP -= ellenfelTamadas;
+                    }
+                    else
+                    {
+                        if (jatekosVedekezes > 0)
+                        {
+                            ellenfelTamadas -= jatekosVedekezes;
+                            if (ellenfelTamadas < 0) ellenfelTamadas = 0;
+                            Console.WriteLine($"A védekezésednek köszönhetően hárítod a {ellenfelNev} támadását. A {ellenfelNev} {ellenfelTamadas} erővel támad");
+                        }
+
+                        jatekosHP -= ellenfelTamadas;
+                    }
 
                 }
 
@@ -332,8 +400,10 @@ namespace PisztáciaFagylalt
             Console.WriteLine("\n----------------------------------------------------------");
             Console.WriteLine($"{jatekosNev} adatai: ");
             Console.WriteLine($"támadóerő: {jatekosTamadoEro}");
+            Console.WriteLine($"védekezés: {jatekosVedekezes}");
             Console.WriteLine($"életerő: {jatekosHP}");
             Console.WriteLine($"tűz elleni védekezés: {jatekosTuzVedekezes}");
+            Console.WriteLine($"tűz támadás: {jatekosTuzTamadas}");
             Console.WriteLine("----------------------------------------------------------");
         }
 

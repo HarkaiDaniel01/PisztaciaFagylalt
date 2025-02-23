@@ -70,29 +70,51 @@ namespace PisztáciaFagylalt
 
                 /*-------------------------------------------------Intro----------------------------------------------------*/
 
-                Console.Write("Add meg a neved: ");
+                Console.Write("\nAdd meg a neved: ");
                 jatekosNev = Console.ReadLine();
                 Console.WriteLine($"Üdvözöllek {jatekosNev}! Nyomj le egy billentyűt,ha készen állsz az izgalmas utazásra!");
                 Console.ReadKey();
 
-                szovegKiir($"Daróczia mindig is híres volt különleges világáról.\n" +
+            intro:
+                Console.Write("Át szeretnéd ugrani az introt? | Igen | Nem | : ");
+                String valaszIntro = Console.ReadLine();
+
+                if (valaszIntro.ToLower() == "nem")
+                {
+                    szovegKiir($"\nDaróczia mindig is híres volt különleges világáról.\n" +
                     $"Számtalan csodát élhet át az,ki kvülállóként lép be ebbe a csodálatos országba.\n" +
                     $"Habár Daróczia rengeteg szépséget rejt,sajnos hosszú idők óta a gonoszság árnyékolja be vidékeit.\n" +
                     $"A koboldok és a mohóság uralta rabló emberek rendszeresen megtámadják és kifosztják Daróczia békés lakosait,akik képtelenek megvédeni magukat.\n" +
                     $"Várják,hogy egy nap eljön majd a hős,aki elhozza a békét.\n" +
                     $"Sokan úgy gondolják,hogy ez a hős a Harka erdőben él. Sokan látták már őt.\nEgy vakmerő,magas, izmos testfelépítésű ember,aki talán méltó ahhoz,hogy leszámoljon a sötétség erőivel.\n" +
                     $"Ezt az embert úgy hívták,hogy: {jatekosNev} \n"
-                    );
+                     );
 
-                Console.WriteLine($"A hős {jatekosNev}, mindig is érezte,hogy valami különleges dolog miatt született meg.\nIgazán hős típus volt és mindig mások érdekeit helyezte előtérbe.\n" +
-                    $"A következő történet is az ő hősies,önfeláldozó személyiségéről szól.\nŐ mindenki számára példakép lehet.\n");
+                    Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                    Console.ReadKey();
 
-                Console.WriteLine("Egy nap ez a hős kitűzött magának egy hihetetlenül magas rendű célt.\nTudomására jutott,hogy a Daróczi tengerpartra érkezett egy rémísztő alak egy fagylaltos kocsival.\n" +
-                    "Előtört belőle a hős és elhatározta,hogy el fog utazni ehhez az illetőhöz és vesz tőle egy fagylaltot,mert nagyon szereti azt.\nEzzel az elhatározással veszi kezdetét a hősies kaland.\n");
+                    szovegKiir($"\n\nA hős {jatekosNev}, mindig is érezte,hogy valami különleges dolog miatt született meg.\nIgazán hős típus volt és mindig mások érdekeit helyezte előtérbe.\n" +
+                        $"A következő történet is az ő hősies,önfeláldozó személyiségéről szól.\nŐ mindenki számára példakép lehet.\n");
 
+                    Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                    Console.ReadKey();
 
+                    szovegKiir("\n\nEgy nap ez a hős kitűzött magának egy hihetetlenül magas rendű célt.\nTudomására jutott,hogy a Daróczi tengerpartra érkezett egy rémísztő alak egy fagylaltos kocsival.\n" +
+                        "Előtört belőle a hős és elhatározta,hogy el fog utazni ehhez az illetőhöz és vesz tőle egy fagylaltot,mert nagyon szereti azt.\nEzzel az elhatározással veszi kezdetét a hősies kaland.\n");
+
+                    Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                    Console.ReadKey();
+                } else if (valaszIntro.ToLower() == "igen")
+                {
+                    
+                } else
+                {
+                    Console.WriteLine("\nNem megfelelő választ adtál meg!");
+                    goto intro;
+                }
                 /*------------------------------------------------Játék-------------------------------------------------------*/
-                Console.WriteLine($"\n\n\nKedves és hősies {jatekosNev}!\nEgy barátod veled szeretne menni erre a kalandra.\nFelajánlotta,hogy ha megvárod őt,akkor el tud téged vinni a tengerpartra a Daróczi mobillal.\nViszont neked most kell az a fagylalt. Mit választasz?");
+
+                Console.WriteLine($"\n\nKedves és hősies {jatekosNev}!\nEgy barátod veled szeretne menni erre a kalandra.\nFelajánlotta,hogy ha megvárod őt,akkor el tud téged vinni a tengerpartra a Daróczi mobillal.\nViszont neked most kell az a fagylalt. Mit választasz?");
 
             kunyho:
                 Console.Write("\nMegvárod vagy elindulsz egyedül? | Maradok | Elindulok | : ");
@@ -102,12 +124,17 @@ namespace PisztáciaFagylalt
                 {
                     Console.WriteLine("\nElindulsz egyedül a kalandos útnak. Magaddal viszed a fegyveredet,az ezer éves kardot és a gyémántalmát,amit egyszer felhasználhatsz és akkor +75 életerőt kapsz.");
                     jatekosAdatKiir();
+                    Console.WriteLine("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő.");
                 elagazas:
-                    Console.Write("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő. Melyik utat választod? | Bal | jobb | : ");
+                    Console.Write("Melyik utat választod ? | Bal | jobb | : ");
                     String valaszElagazas = Console.ReadLine();
 
                     if (valaszElagazas.ToLower() == "bal")
                     {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Clear();
+
                         Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy goblin. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
 
                         if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
@@ -275,7 +302,7 @@ namespace PisztáciaFagylalt
 
                         if (csata("Bud Spencer", budSpencerTamadoEro, budSpencerHP))
                         {
-                            Console.WriteLine("Sikeresen legyőzted Bud Spencert! Sajnos kiderült,hogy igazat mondott és valóban kifogyott a pisztácia,azonban Daróczia lakosai nagyon hálásak neked. Utazásod során több helyen is megfordultál és hatalmas erőd hírneve elijesztette Daróczia gonosztevőit,így elhoztad a békét és az emberek boldogan élhetnek tovább a varázslatos világban. Hősként ünnepelnek és még pisztácia fagylaltot is kaptál tőlük. \nVége!");
+                            Console.WriteLine("Sikeresen legyőzted Bud Spencert! Sajnos kiderült,hogy igazat mondott és valóban kifogyott a pisztácia,azonban Daróczia lakosai nagyon hálásak neked. Utazásod során több helyen is megfordultál és hatalmas erőd hírneve elijesztette Daróczia gonosztevőit,így elhoztad a békét és az emberek boldogan élhetnek tovább a varázslatos világban. Hősként ünnepelnek és még pisztácia fagylaltot is kaptál tőlük.Bud Spencer felajánlotta,hogy legyetek társak. Elfogadod és most együtt mentek hajóval megkeresni a titkos kincset.Végül Bud Spencer kinyitott egy konzerv chilis babot.\nVége!");
                         }
                     }
 
@@ -286,7 +313,7 @@ namespace PisztáciaFagylalt
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.Clear();
 
-                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília . Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd megöl téged.Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
+                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília . Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd lekever neked egyet. Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
 
                 }
                 else
@@ -295,7 +322,7 @@ namespace PisztáciaFagylalt
                     goto kunyho;
                 }
 
-                Console.Write("Szeretnél új játékot kezdeni? Nyomj le egy billentyűt | ÚJ JÁTÉK (ENTER) | KILÉPÉS (ESC) |");
+                Console.Write("\nSzeretnél új játékot kezdeni? Nyomj le egy billentyűt | ÚJ JÁTÉK (ENTER) | KILÉPÉS (ESC) |");
                 billentyu = Console.ReadKey(true).Key;
 
             } while (billentyu != ConsoleKey.Escape);
@@ -352,7 +379,7 @@ namespace PisztáciaFagylalt
                         {
                             sarkanyTamadas -= jatekosVedekezes;
                             if (sarkanyTamadas < 0) sarkanyTamadas = 0;
-                            Console.WriteLine($"A védekezésednek köszönhetően hárítod a {ellenfelNev} támadását. A {ellenfelNev} {sarkanyTamadas} erővel támad");
+                            Console.WriteLine($"A védekezésednek köszönhetően hárítod (a) {ellenfelNev} támadását. (A) {ellenfelNev} {sarkanyTamadas} erővel támad");
                         }
 
                         jatekosHP -= sarkanyTamadas;
@@ -364,7 +391,7 @@ namespace PisztáciaFagylalt
                         {
                             ellenfelTamadas -= jatekosVedekezes;
                             if (ellenfelTamadas < 0) ellenfelTamadas = 0;
-                            Console.WriteLine($"A védekezésednek köszönhetően hárítod a {ellenfelNev} támadását. A {ellenfelNev} {ellenfelTamadas} erővel támad");
+                            Console.WriteLine($"A védekezésednek köszönhetően hárítod (a) {ellenfelNev} támadását. (A) {ellenfelNev} {ellenfelTamadas} erővel támad");
                         }
 
                         jatekosHP -= ellenfelTamadas;
@@ -410,7 +437,7 @@ namespace PisztáciaFagylalt
             }
             else
             {
-                Console.WriteLine($"A {ellenfelNev} megölt téged, vége a játéknak.");
+                Console.WriteLine($"(A) {ellenfelNev} legyőzött téged, vége a játéknak.");
                 jatekosEl = false;
             }
 
@@ -435,8 +462,9 @@ namespace PisztáciaFagylalt
             foreach (char c in szoveg)
             {
                 Console.Write(c);
-                Thread.Sleep(20);
+                Thread.Sleep(1);
             }
+
         }
 
     }

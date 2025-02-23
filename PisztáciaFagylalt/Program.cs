@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -16,7 +18,7 @@ namespace PisztáciaFagylalt
         public static String jatekosNev;
         public static double jatekosTuzVedekezes;
         public static double jatekosTuzTamadas;
-        public static Boolean JatekosEl;
+        public static Boolean jatekosEl;
 
         public static Boolean gyemantAlma;
 
@@ -34,18 +36,25 @@ namespace PisztáciaFagylalt
             double sarkanyTamadoEro = 25;
             double sarkanyHP = 300;
 
+            double budSpencerTamadoEro = 25;
+            double budSpencerHP = 500;
+
             Boolean acelKard;
 
             ConsoleKey billentyu;
             //Fő program:
             do
             {
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
+
                 jatekosHP = 100;
                 jatekosTamadoEro = 10;
                 jatekosVedekezes = 0;
                 jatekosTuzVedekezes = 10;
                 jatekosTuzTamadas = 0;
-                JatekosEl = true;
+                jatekosEl = true;
                 gyemantAlma = true;
                 acelKard = false;
 
@@ -64,14 +73,15 @@ namespace PisztáciaFagylalt
                 Console.Write("Add meg a neved: ");
                 jatekosNev = Console.ReadLine();
                 Console.WriteLine($"Üdvözöllek {jatekosNev}! Nyomj le egy billentyűt,ha készen állsz az izgalmas utazásra!");
+                Console.ReadKey();
 
-                Console.WriteLine($"Daróczia mindig is híres volt különleges világáról.\n" +
+                szovegKiir($"Daróczia mindig is híres volt különleges világáról.\n" +
                     $"Számtalan csodát élhet át az,ki kvülállóként lép be ebbe a csodálatos országba.\n" +
                     $"Habár Daróczia rengeteg szépséget rejt,sajnos hosszú idők óta a gonoszság árnyékolja be vidékeit.\n" +
                     $"A koboldok és a mohóság uralta rabló emberek rendszeresen megtámadják és kifosztják Daróczia békés lakosait,akik képtelenek megvédeni magukat.\n" +
                     $"Várják,hogy egy nap eljön majd a hős,aki elhozza a békét.\n" +
                     $"Sokan úgy gondolják,hogy ez a hős a Harka erdőben él. Sokan látták már őt.\nEgy vakmerő,magas, izmos testfelépítésű ember,aki talán méltó ahhoz,hogy leszámoljon a sötétség erőivel.\n" +
-                    $"Ezt az embert úgy hvták,hogy: {jatekosNev} \n"
+                    $"Ezt az embert úgy hívták,hogy: {jatekosNev} \n"
                     );
 
                 Console.WriteLine($"A hős {jatekosNev}, mindig is érezte,hogy valami különleges dolog miatt született meg.\nIgazán hős típus volt és mindig mások érdekeit helyezte előtérbe.\n" +
@@ -90,7 +100,7 @@ namespace PisztáciaFagylalt
 
                 if (valaszKunyho.ToLower() == "elindulok")
                 {
-                    Console.WriteLine("\nElindulsz egyedül a kalandos utnak. Magaddal viszed a fegyveredet,az ezer éves kardot és a gyémántalmát,amit egyszer felhasználhatsz és akkor +75 életerőt kapsz.");
+                    Console.WriteLine("\nElindulsz egyedül a kalandos útnak. Magaddal viszed a fegyveredet,az ezer éves kardot és a gyémántalmát,amit egyszer felhasználhatsz és akkor +75 életerőt kapsz.");
                     jatekosAdatKiir();
                 elagazas:
                     Console.Write("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő. Melyik utat választod? | Bal | jobb | : ");
@@ -175,7 +185,7 @@ namespace PisztáciaFagylalt
                         goto elagazas;
                     }
 
-                    if (JatekosEl)
+                    if (jatekosEl)
                     {
                         Console.WriteLine("Megérkezel egy faluba,ahol találkozol egy idős nővel. Felajánlja,hogy ad neked fegyvert,de csak az egyiket választhatod.");
                     falu:
@@ -230,7 +240,7 @@ namespace PisztáciaFagylalt
                         }
                     }
 
-                    if (JatekosEl)
+                    if (jatekosEl)
                     {
                         Console.WriteLine("Sikeresen átjutottál a hegyvidéken. A távolban megpillantasz egy misztikus vonatot. Felszálsz rá. A vonaton találkozol egy banditával.");
                     vonat:
@@ -240,8 +250,8 @@ namespace PisztáciaFagylalt
                         if (valaszBandita.ToLower() == "igen")
                         {
                             if (csata("Bandita", banditaTamadoEro, banditaHP)) {
-                                Console.WriteLine("Győztél! Megkaptad az 'Elveszett lovag páncélja' nevezetű páncélt (+25 pont védekezés)!");
-                                jatekosVedekezes += 25;
+                                Console.WriteLine("Győztél! Megkaptad az 'Elveszett lovag páncélja' nevezetű páncélt (+15 pont védekezés)!");
+                                jatekosVedekezes += 15;
                                 jatekosAdatKiir();
                             }
 
@@ -259,11 +269,24 @@ namespace PisztáciaFagylalt
                         }
                     }
 
+                    if (jatekosEl)
+                    {
+                        Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra,ahol végre találkozol a rejtélyes fagylaltárussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília. Erre azt feleled,hogy pisztácia fagylaltot kérsz. Erre a fagylalt árus dühös lesz és azt feleli: A pisztácia kifogyott,majd megtámad téged és kénytelen vagy vele felvenni a harcot! Kiderül,hogy a rejtélyes fagylalt árus neve: Bud Spencer.");
+
+                        if (csata("Bud Spencer", budSpencerTamadoEro, budSpencerHP))
+                        {
+                            Console.WriteLine("Sikeresen legyőzted Bud Spencert! Sajnos kiderült,hogy igazat mondott és valóban kifogyott a pisztácia,azonban Daróczia lakosai nagyon hálásak neked. Utazásod során több helyen is megfordultál és hatalmas erőd hírneve elijesztette Daróczia gonosztevőit,így elhoztad a békét és az emberek boldogan élhetnek tovább a varázslatos világban. Hősként ünnepelnek és még pisztácia fagylaltot is kaptál tőlük. \nVége!");
+                        }
+                    }
+
                 }
                 else if (valaszKunyho.ToLower() == "maradok")
                 {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Clear();
 
-                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van csokoládé és vanillia. Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd megöl téged.Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
+                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília . Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd megöl téged.Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
 
                 }
                 else
@@ -388,7 +411,7 @@ namespace PisztáciaFagylalt
             else
             {
                 Console.WriteLine($"A {ellenfelNev} megölt téged, vége a játéknak.");
-                JatekosEl = false;
+                jatekosEl = false;
             }
 
             jatekosAdatKiir();
@@ -405,6 +428,15 @@ namespace PisztáciaFagylalt
             Console.WriteLine($"tűz elleni védekezés: {jatekosTuzVedekezes}");
             Console.WriteLine($"tűz támadás: {jatekosTuzTamadas}");
             Console.WriteLine("----------------------------------------------------------");
+        }
+
+        public static void szovegKiir(String szoveg)
+        {
+            foreach (char c in szoveg)
+            {
+                Console.Write(c);
+                Thread.Sleep(20);
+            }
         }
 
     }

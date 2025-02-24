@@ -132,7 +132,7 @@ namespace PisztáciaFagylalt
                     if (valaszElagazas.ToLower() == "bal")
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.Clear();
 
                         Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen szembejön veled egy goblin. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
@@ -144,6 +144,13 @@ namespace PisztáciaFagylalt
                             jatekosTuzVedekezes = Math.Round(jatekosTuzVedekezes * 1.1);
                             jatekosAdatKiir();
 
+                            Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                            Console.ReadKey();
+
+                            Console.BackgroundColor = ConsoleColor.Magenta;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Clear();
+
                             Console.WriteLine("Továbbmész. Megérkezel Gomba Land-be,ahol találkozol a Minótaurusszal,aki dühösen neked megy.");
                             if (csata("Minótaurusz", minotaurusTamadoEro, minotauruszHp))
                             {
@@ -153,6 +160,10 @@ namespace PisztáciaFagylalt
                     }
                     else if (valaszElagazas.ToLower() == "jobb")
                     {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Clear();
+
                         Console.WriteLine("\nA Tölgyerdőben haladsz tovább az ösvényen és találsz egy acélkardot.");
                     acelkard:
                         Console.Write("Felveszed az acélkardot? | igen | nem | : ");
@@ -214,6 +225,13 @@ namespace PisztáciaFagylalt
 
                     if (jatekosEl)
                     {
+                        Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                        Console.ReadKey();
+
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Clear();
+
                         Console.WriteLine("Megérkezel egy faluba,ahol találkozol egy idős nővel. Felajánlja,hogy ad neked fegyvert,de csak az egyiket választhatod.");
                     falu:
                         Console.WriteLine("\nThanos kar:\n\t+50% támadóerő\n\t+10 HP\n\t+15% Tűz elleni védekezés\n ");
@@ -238,6 +256,13 @@ namespace PisztáciaFagylalt
                             Console.WriteLine("\nNem megfelelő választ adtál meg!");
                             goto falu;
                         }
+
+                        Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                        Console.ReadKey();
+
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Clear();
 
                         Console.WriteLine("A falut elhagyva egy hegyvidékhez érkezel,ahol nem tudsz továbbhaladni,mert egy sárkány alszk elötted.");
                     hegyvidek:
@@ -269,6 +294,13 @@ namespace PisztáciaFagylalt
 
                     if (jatekosEl)
                     {
+                        Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                        Console.ReadKey();
+
+                        Console.BackgroundColor = ConsoleColor.Yellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Clear();
+
                         Console.WriteLine("Sikeresen átjutottál a hegyvidéken. A távolban megpillantasz egy misztikus vonatot. Felszálsz rá. A vonaton találkozol egy banditával.");
                     vonat:
                         Console.WriteLine("Megküzdesz a banditával vagy nem? | Igen | Nem | : ");
@@ -298,6 +330,13 @@ namespace PisztáciaFagylalt
 
                     if (jatekosEl)
                     {
+                        Console.Write("\nyomj ENTER billentyűt a folytatáshoz!");
+                        Console.ReadKey();
+
+                        Console.BackgroundColor = ConsoleColor.Cyan;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Clear();
+
                         Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra,ahol végre találkozol a rejtélyes fagylaltárussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília. Erre azt feleled,hogy pisztácia fagylaltot kérsz. Erre a fagylalt árus dühös lesz és azt feleli: A pisztácia kifogyott,majd megtámad téged és kénytelen vagy vele felvenni a harcot! Kiderül,hogy a rejtélyes fagylalt árus neve: Bud Spencer.");
 
                         if (csata("Bud Spencer", budSpencerTamadoEro, budSpencerHP))
@@ -309,8 +348,8 @@ namespace PisztáciaFagylalt
                 }
                 else if (valaszKunyho.ToLower() == "maradok")
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Clear();
 
                     Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal és elvisz téged a strandra,ahol találkoztok a rejtéjes fagylalt árussal. Megkérdezi,hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília . Erre azt feleled,hogy Pisztácia fagylaltot kérsz.Erre a válaszra az illető dühös lesz és azt feleli,hogy a pisztácia fagylalt kifogyott,majd lekever neked egyet. Utólag kiderült,hogy a rejtélyes alak neve: Bud Spencer.");
@@ -342,6 +381,11 @@ namespace PisztáciaFagylalt
 
             Console.WriteLine("Nyomj ENTER billentyűt, ha készen állsz a harcra!");
             Console.ReadKey();
+
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+
             do
             {
                 Console.WriteLine("----------------------------------------------------------");
@@ -358,7 +402,9 @@ namespace PisztáciaFagylalt
 
 
                 if (ellenfelHP < 0) ellenfelHP = 0;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{ellenfelNev} életereje: {ellenfelHP}");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\n----------------------------------------------------------");
 
                 if (ellenfelHP > 0)
@@ -401,7 +447,9 @@ namespace PisztáciaFagylalt
 
                 if (jatekosHP < 0) jatekosHP = 0;
 
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{jatekosNev} életereje: {jatekosHP}");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\nNyomj ENTER billentyűt a folytatáshoz\n");
                 Console.ReadKey();
 

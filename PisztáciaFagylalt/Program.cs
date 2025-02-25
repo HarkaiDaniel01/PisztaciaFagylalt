@@ -122,9 +122,9 @@ namespace PisztáciaFagylalt
 
                 if (valaszKunyho.ToLower() == "elindulok")
                 {
-                    Console.WriteLine("\nElindulsz egyedül a kalandos útnak. Magaddal viszed a fegyveredet, az ezer éves kardot és a gyémántalmát, amit egyszer felhasználhatsz és akkor +75 életerőt kapsz.");
+                    Console.WriteLine("\nElindulsz egyedül a kalandos útnak. \nMagaddal viszed a fegyveredet, az ezeréves kardot és a gyémántalmát, amit egyszer felhasználhatsz és akkor +75 életerőt kapsz.");
                     jatekosAdatKiir();
-                    Console.WriteLine("Egy elágazáshoz érkezel. Két irányba mehetsz. Bal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő.");
+                    Console.WriteLine("Egy elágazáshoz érkezel. Két irányba mehetsz. \nBal oldalon van a Sötét erdő, jobb oldalon pedig a Tölgy erdő.");
                 elagazas:
                     Console.Write("Melyik utat választod? | Bal | Jobb | : ");
                     String valaszElagazas = Console.ReadLine();
@@ -135,11 +135,11 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Clear();
 
-                        Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen, szembejön veled egy goblin. Megtámad téged és kénytelen vagy felvenni vele a harcot.");
+                        Console.WriteLine("Ahogy a sötét erdőben haladsz az ösvényen, szembejön veled egy goblin. \nMegtámad téged és kénytelen vagy felvenni vele a harcot.");
 
                         if (csata("Goblin", goblinTamadoEro, goblinHP) == true)
                         {
-                            Console.WriteLine("\nSikeresen legyőzted a goblint és megszerezted tőle Daróczi Gergő gyűrűjét, melynek segítségével 20%-kal több az alap támadóerőd és 10%-kal több a tűz elleni védekezésed.");
+                            Console.WriteLine("\nSikeresen legyőzted a goblint és megszerezted tőle Daróczi Gergő gyűrűjét, \nmelynek segítségével 20%-kal több az alap támadóerőd és 10%-kal több a tűz elleni védekezésed.");
                             jatekosTamadoEro = Math.Round(jatekosTamadoEro * 1.2);
                             jatekosTuzVedekezes = Math.Round(jatekosTuzVedekezes * 1.1);
                             jatekosAdatKiir();
@@ -151,7 +151,7 @@ namespace PisztáciaFagylalt
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.Clear();
 
-                            Console.WriteLine("Továbbmész. Megérkezel Gomba Landbe, ahol találkozol a Minótaurusszal, aki dühösen neked megy.");
+                            Console.WriteLine("Továbbmész.\n Megérkezel Gomba Landbe, ahol találkozol a Minótaurusszal, aki dühösen neked megy.");
                             if (csata("Minótaurusz", minotaurusTamadoEro, minotauruszHp))
                             {
                                 Console.WriteLine("Sikeresen legyőzted a Minótauruszt!");
@@ -177,7 +177,7 @@ namespace PisztáciaFagylalt
                             jatekosAdatKiir();
                         } else if (valaszKard.ToLower() == "nem")
                         {
-                            Console.WriteLine("Nem vetted fel az acélkardot, és tovább haladtál, azonban egy furcsa hangra lettél figyelmes. Visszapillantva azt vetted észre, hogy az acélkard rejtélyes módon eltűnt.");
+                            Console.WriteLine("Nem vetted fel az acélkardot, és tovább haladtál, azonban egy furcsa hangra lettél figyelmes. \nVisszapillantva azt vetted észre, hogy az acélkard rejtélyes módon eltűnt.");
                         } else
                         {
                             Console.WriteLine("\nNem megfelelő választ adtál meg!");
@@ -232,14 +232,14 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Clear();
 
-                        Console.WriteLine("Megérkezel egy faluba, ahol találkozol egy idős nővel. Felajánlja, hogy ad neked fegyvert, de csak az egyiket választhatod.");
+                        Console.WriteLine("Megérkezel egy faluba, ahol találkozol egy idős nővel.\n Felajánlja, hogy ad neked fegyvert, de csak az egyiket választhatod.");
                     falu:
                         Console.WriteLine("\nA végtelenség kesztyűje:\n\t+50% támadóerő\n\t+10 HP\n\t+15% Tűz elleni védekezés\n ");
                         Console.WriteLine("Harka gyűrű:\n\t +50 HP\n");
                         Console.Write("Melyiket választod? | Kesztyű | Gyűrű | : ");
                         String valaszFegyver = Console.ReadLine();
 
-                        if (valaszFegyver.ToLower() == "kar")
+                        if (valaszFegyver.ToLower() == "kesztyű")
                         {
                             Console.WriteLine("Megkaptad a Végtelenség kesztyűjét! (+50% támadóerő, +10 HP, +15% tűz elleni védekezés).");
                             jatekosTamadoEro = Math.Round(jatekosTamadoEro * 1.5);
@@ -301,7 +301,7 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Clear();
 
-                        Console.WriteLine("Sikeresen átjutottál a hegyvidéken. A távolban megpillantasz egy misztikus vonatot. Felszállsz rá. A vonaton találkozol egy banditával.");
+                        Console.WriteLine("Sikeresen átjutottál a hegyvidéken. \nA távolban megpillantasz egy misztikus vonatot. Felszállsz rá. A vonaton találkozol egy banditával.");
                     vonat:
                         Console.Write("Megküzdesz a banditával vagy nem? | Igen | Nem | : ");
                         String valaszBandita = Console.ReadLine();
@@ -309,7 +309,7 @@ namespace PisztáciaFagylalt
                         if (valaszBandita.ToLower() == "igen")
                         {
                             if (csata("Bandita", banditaTamadoEro, banditaHP)) {
-                                Console.WriteLine("Győztél! Megkaptad az 'Elveszett lovag páncélja' nevezetű páncélt (+15 pont védekezés)!");
+                                Console.WriteLine("Győztél! \nMegkaptad az 'Elveszett lovag páncélja' nevezetű páncélt (+15 pont védekezés)!");
                                 jatekosVedekezes += 15;
                                 jatekosAdatKiir();
                             }
@@ -337,11 +337,11 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Clear();
 
-                        Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra, ahol végre találkozol a rejtélyes fagylaltárussal. Megkérdezi, hogy milyen fagylaltot kérsz? Van tutti frutti, karamell és vanília. Erre azt feleled, hogy pisztácia fagylaltot kérsz. Erre a fagylalt árus dühös lesz, és azt feleli,hogy a pisztácia kifogyott, majd megtámad téged, és kénytelen vagy vele felvenni a harcot! Kiderül, hogy a rejtélyes fagylaltárus neve: Bud Spencer.");
+                        Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra, ahol végre találkozol a rejtélyes fagylaltárussal.\n Megkérdezi, hogy milyen fagylaltot kérsz. \nVan tutti frutti, karamell és vanília. \nErre azt feleled, hogy pisztácia fagylaltot kérsz. \nErre a fagylaltárus dühös lesz, és azt feleli,hogy a pisztácia kifogyott, majd megtámad téged, és kénytelen vagy vele felvenni a harcot! \nKiderül, hogy a rejtélyes fagylaltárus neve: Bud Spencer.");
 
                         if (csata("Bud Spencer", budSpencerTamadoEro, budSpencerHP))
                         {
-                            Console.WriteLine("Sikeresen legyőzted Bud Spencert! Sajnos kiderült, hogy igazat mondott és valóban kifogyott a pisztácia, azonban Daróczia lakosai nagyon hálásak neked. Utazásod során több helyen is megfordultál, és hatalmas erőd hírneve elijesztette Daróczia gonosztevőit, így elhoztad a békét és az emberek boldogan élhetnek tovább a varázslatos világban. Hősként ünnepelnek, és még pisztácia fagylaltot is kaptál tőlük. Bud Spencer felajánlotta, hogy legyetek társak. Elfogadod, és most együtt mentek hajóval megkeresni a titkos kincset. Végül Bud Spencer kinyitott egy konzerv chilis babot.\nVége!");
+                            Console.WriteLine("Sikeresen legyőzted Bud Spencert!\nSajnos kiderült, hogy igazat mondott és valóban kifogyott a pisztácia, azonban Daróczia lakosai nagyon hálásak neked. \nUtazásod során több helyen is megfordultál, és hatalmas erőd hírneve elijesztette Daróczia gonosztevőit, \nígy elhoztad a békét és az emberek boldogan élhetnek tovább a varázslatos világban.\nHősként ünnepelnek, és még pisztácia fagylaltot is kaptál tőlük. \nBud Spencer felajánlotta, hogy legyetek társak. \nElfogadod, és most együtt mentek hajóval megkeresni a titkos kincset. \nVégül Bud Spencer kinyitott egy konzerv chilis babot.\nVége!");
                         }
                     }
 
@@ -352,7 +352,7 @@ namespace PisztáciaFagylalt
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Clear();
 
-                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal, és elvisz téged a strandra, ahol találkoztok a rejtélyes fagylaltárussal. Megkérdezi, hogy milyen fagylaltot kérsz. Van tutti frutti, karamell és vanília. Erre azt feleled, hogy pisztácia fagylaltot kérsz. Erre a válaszra az illető dühös lesz, és azt feleli, hogy a pisztácia fagylalt kifogyott, majd lekever neked egyet. Utólag kiderült, hogy a rejtélyes alak neve: Bud Spencer.");
+                    Console.WriteLine("\nA barátod megérkezik a Daróczi mobillal, és elvisz téged a strandra,\nahol találkoztok a rejtélyes fagylaltárussal.\nMegkérdezi, hogy milyen fagylaltot kérsz.\nVan tutti frutti, karamell és vanília.\nErre azt feleled, hogy pisztácia fagylaltot kérsz.\nErre a válaszra az illető dühös lesz, és azt feleli, hogy a pisztácia fagylalt kifogyott,\nmajd lekever neked egyet.\nUtólag kiderült, hogy a rejtélyes alak neve: Bud Spencer.");
 
                 }
                 else

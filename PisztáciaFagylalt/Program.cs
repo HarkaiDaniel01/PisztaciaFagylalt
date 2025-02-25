@@ -151,7 +151,7 @@ namespace PisztáciaFagylalt
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.Clear();
 
-                            Console.WriteLine("Továbbmész.\n Megérkezel Gomba Landbe, ahol találkozol a Minótaurusszal, aki dühösen neked megy.");
+                            Console.WriteLine("Továbbmész.\nMegérkezel Gomba Landbe, ahol találkozol a Minótaurusszal, aki dühösen neked megy.");
                             if (csata("Minótaurusz", minotaurusTamadoEro, minotauruszHp))
                             {
                                 Console.WriteLine("Sikeresen legyőzted a Minótauruszt!");
@@ -232,7 +232,7 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Clear();
 
-                        Console.WriteLine("Megérkezel egy faluba, ahol találkozol egy idős nővel.\n Felajánlja, hogy ad neked fegyvert, de csak az egyiket választhatod.");
+                        Console.WriteLine("Megérkezel egy faluba, ahol találkozol egy idős nővel.\nFelajánlja, hogy ad neked fegyvert, de csak az egyiket választhatod.");
                     falu:
                         Console.WriteLine("\nA végtelenség kesztyűje:\n\t+50% támadóerő\n\t+10 HP\n\t+15% Tűz elleni védekezés\n ");
                         Console.WriteLine("Harka gyűrű:\n\t +50 HP\n");
@@ -337,7 +337,7 @@ namespace PisztáciaFagylalt
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Clear();
 
-                        Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra, ahol végre találkozol a rejtélyes fagylaltárussal.\n Megkérdezi, hogy milyen fagylaltot kérsz. \nVan tutti frutti, karamell és vanília. \nErre azt feleled, hogy pisztácia fagylaltot kérsz. \nErre a fagylaltárus dühös lesz, és azt feleli,hogy a pisztácia kifogyott, majd megtámad téged, és kénytelen vagy vele felvenni a harcot! \nKiderül, hogy a rejtélyes fagylaltárus neve: Bud Spencer.");
+                        Console.WriteLine("\nA misztikus vonattal megérkezel a tengerpartra, ahol végre találkozol a rejtélyes fagylaltárussal.\nMegkérdezi, hogy milyen fagylaltot kérsz. \nVan tutti frutti, karamell és vanília. \nErre azt feleled, hogy pisztácia fagylaltot kérsz. \nErre a fagylaltárus dühös lesz, és azt feleli,hogy a pisztácia kifogyott, majd megtámad téged, és kénytelen vagy vele felvenni a harcot! \nKiderül, hogy a rejtélyes fagylaltárus neve: Bud Spencer.");
 
                         if (csata("Bud Spencer", budSpencerTamadoEro, budSpencerHP))
                         {
